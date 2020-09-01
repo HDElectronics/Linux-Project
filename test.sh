@@ -4,7 +4,4 @@
 SAVEIFS=$IFS
 IFS=$'\n'
 readarray -t my_array <myfile
-for x in ${!my_array[@]}
-do
-    echo "$((x+1)) - ${my_array[x]}"
-done
+echo ${my_array[@]}
