@@ -2,14 +2,13 @@
 
 #Récupérer la liste des taches du fichier "mem"
 #Changer le delimiteur de "Espace" à "Nouvelle lingne"
-SAVEIFS=$IFS
-#IFS=$'\n'
+#SAVEIFS=$IFS
+IFS=$'\n'
 #Lire et mettre dans une liste le fichier "mem" qui contient les taches
 readarray my_array <mem;
 #Executer ajoute ou liste ou fini selon ce que l'utilisateur a écrit en argument "$1"
 case "$1" in
     ajoute) #dans le cas où l'utilisateur veut ajouter une tache
-        IFS=$'\n'
         postoadd=$2
         postoadd=$((--postoadd))
         valtoadd=$3
@@ -45,18 +44,24 @@ case "$1" in
         do
             echo "$((x+1)) - ${my_array[x]}"
         done
+        exit 0
     ;;
     fini) #dans le cas ou l'utilisateur veut enelever une tache de la liste
         postodel=$2
         postodel=$((--postodel))
-        echo "La tache ${my_array[$postodel]} a été finit"
+        echo "La tache \"${my_array[$postodel]}\" a été finit"
         unset my_array[$postodel]
     ;;
     --help) #dans le cas ou l'utilisateur veut voir le "help" de ce script
-        echo "welcome to the help"
+        echo "Bienveunue dans le help de ce scripte TODO Liste"
+        echo "Vous pouver ajouter des taches à faire avec la commande (ajoute)"
+        echo "-  ajoute <position ou vous voulez ajouter la tache> <\"la tache que vous voulez ajouter\">" 
+        echo "-  liste"
+        echo "-  fini <position de la tache que vous voulez enelever>"
     ;;
     *) #dans le cas où l'utilisateur n'a entré aucun argument 
         echo "Entrez un argument (liste, ajoute, fini)"
+        echo "Pour plus d'information tapez: todo.sh --help"
         exit 1
     ;;
 esac
@@ -64,4 +69,4 @@ esac
 truncate -s 0 mem
 #rm mem
 #mettre à jour la liste des taches
-printf "%s\n" "${my_array[@]}" > mem
+printf "%s" "${my_array[@]}" > mem
