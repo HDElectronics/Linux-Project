@@ -2,7 +2,6 @@
 
 #Récupérer la liste des taches du fichier "mem"
 #Changer le delimiteur de "Espace" à "Nouvelle lingne"
-#SAVEIFS=$IFS
 IFS=$'\n'
 #Lire et mettre dans une liste le fichier "mem" qui contient les taches
 readarray my_array <mem;
@@ -67,6 +66,5 @@ case "$1" in
 esac
 #effacer le contenu de "mem" pour réecrire un nouveau contenu
 truncate -s 0 mem
-#rm mem
 #mettre à jour la liste des taches
 printf "%s" "${my_array[@]}" > mem
