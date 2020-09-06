@@ -11,21 +11,23 @@ case "$1" in
         postoadd=$2
         postoadd=$((--postoadd))
         valtoadd=$3
-        ################################################################################################################################################       
+        ####################################################################################      
         #Verifier si l'utilisateur a bien entré les arguments (position, tache)
         if [[ $2 -eq 0 ]] || [ -z $3 ]
         then
-            echo -e "il manque des argument! écriez sous cette forme: ajoute <position> <\"tache à ajouter\">"
+            echo -e "il manque des argument! écriez sous 
+            cette forme: ajoute <position> <\"tache à ajouter\">"
             exit 0
         fi
-        ################################################################################################################################################
+        #####################################################################################
         #verifier si la position n'est pas hors de portée
         if [[ $2 -gt $((${#my_array[@]}+1)) ]] 
         then
-            echo "La position que vous avez choisi est hors de porté la position max que vous pouvez choisir est: $((${#my_array[@]}+1)) "
+            echo "La position que vous avez choisi est hors de porté la position 
+            max que vous pouvez choisir est: $((${#my_array[@]}+1)) "
             exit 0
         fi
-        ################################################################################################################################################
+        ######################################################################################
         #ajouter la tache à la position demander par l'utilisateur
         for (( x=0; x<=${#my_array[@]}; x++ ))
         do
@@ -48,13 +50,23 @@ case "$1" in
     fini) #dans le cas ou l'utilisateur veut enelever une tache de la liste
         postodel=$2
         postodel=$((--postodel))
-        echo "La tache \"${my_array[$postodel]}\" a été finit"
-        unset my_array[$postodel]
+        # echo "La tache \"${my_array[$postodel]}\" a été finit"
+        # unset my_array[$postodel]
+        for (( x=0; x<=${#my_array[@]}; x++ ))
+        do
+            if [[ ${x} -eq ${postodel} ]]
+            then
+                continue
+            fi
+            temp+=(${my_array[x]})
+        done
+        my_array=(${temp[@]})
     ;;
     --help) #dans le cas ou l'utilisateur veut voir le "help" de ce script
         echo "Bienveunue dans le help de ce scripte TODO Liste"
         echo "Vous pouver ajouter des taches à faire avec la commande (ajoute)"
-        echo "-  ajoute <position ou vous voulez ajouter la tache> <\"la tache que vous voulez ajouter\">" 
+        echo "-  ajoute <position ou vous voulez 
+        ajouter la tache> <\"la tache que vous voulez ajouter\">" 
         echo "-  liste"
         echo "-  fini <position de la tache que vous voulez enelever>"
     ;;
@@ -67,4 +79,4 @@ esac
 #effacer le contenu de "mem" pour réecrire un nouveau contenu
 truncate -s 0 mem
 #mettre à jour la liste des taches
-printf "%s" "${my_array[@]}" > mem
+printf "%s\n" "${my_array[@]}" > mem
