@@ -5,5 +5,3 @@
 ### Travail réalisé par:
  > + *KHADRAOUI IBRAHIM*
  > + *BELBEKOUCHE TOUFIK*
- > + *ISLI Abdelali*
- > + *LALMAS Lamine*
